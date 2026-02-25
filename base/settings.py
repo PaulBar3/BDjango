@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     # users apps
     "shop.apps.ShopConfig",
     "api.apps.ApiConfig",
+    'tastypie',
 ]
 
 MIDDLEWARE = [

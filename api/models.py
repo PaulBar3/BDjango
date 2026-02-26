@@ -2,7 +2,7 @@ from tastypie.resources import ModelResource
 from tastypie.authorization import Authorization
 
 from shop.models import Category, Course
-from .authentication import CustomAuth
+from .authentication import CustomAuthentication
 
 
 class CategoryResource(ModelResource):
@@ -17,7 +17,8 @@ class CourseResource(ModelResource):
         queryset = Course.objects.all()
         resource_name = "courses"
         allowed_methods = ["get", "post", "delete"]
-        authentication = CustomAuth()
+        excludes = ['reviews_qty', 'created_at']
+        authentication = CustomAuthentication()
         authorization = Authorization()
 
     def hydrate(self, bundle):
@@ -25,7 +26,8 @@ class CourseResource(ModelResource):
         return bundle
 
     def dehydrate(self, bundle):
-        bundle.data["category_id"] = bundle.obj.category
+        # bundle.data["category_id"] = bundle.obj.category_id
+        bundle.data["category"] = bundle.obj.category
         return bundle
 
     def dehydrate_title(self, bundle):
